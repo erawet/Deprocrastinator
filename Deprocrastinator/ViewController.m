@@ -8,7 +8,11 @@
 
 #import "ViewController.h"
 
-@interface ViewController ()
+@interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *contentText;
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+@property NSMutableArray *dataArray;
 
 @end
 
@@ -18,10 +22,28 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
 }
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (IBAction)onAddButtonPressed:(UIButton *)sender {
+    
+    [self.dataArray addObject:self.contentText.text];
+    
+    [self.tableView reloadData];
 }
+
+#pragma mark UItableView Delegates
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    return self.dataArray.count;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    cell.textLabel.text=[NSString stringWithFormat:@"%@", [self.dataArray objectAtIndex:indexPath.row] ];
+   // [tableView insertRowsAtIndexPaths:indexPath.row withRowAnimation:UITableViewRowActionStyleNormal];
+    
+    return cell;
+}
+
 
 @end
