@@ -62,11 +62,12 @@
 
 
 - (IBAction)onAddButtonPressed:(UIBarButtonItem *)sender {
-    [self.dataArray addObject:self.contentText.text];
+    
     Task *task=[[Task alloc]init];
     task.tapColour=0;
     task.isComplete=NO;
-    
+    task.textString=self.contentText.text;
+    [self.dataArray addObject:task];
     
     [self.tableView reloadData];
     self.contentText.text=@"";
