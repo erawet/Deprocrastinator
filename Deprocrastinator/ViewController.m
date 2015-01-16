@@ -7,8 +7,10 @@
 //
 
 #import "ViewController.h"
+#import "Task.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UITextField *contentText;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property BOOL editBtnPress;
@@ -23,31 +25,54 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.dataArray = [NSMutableArray arrayWithObjects:self.contentText.text, nil];
+    self.dataArray = [[NSMutableArray alloc]init];
     self.editBtnPress=false;
 }
 
+
 - (IBAction)onSwipeGestureColorChange:(UISwipeGestureRecognizer*)sender {
+
+    CGPoint location = [sender locationInView:self.tableView];
+    NSIndexPath *swipedIndexPath = [self.tableView indexPathForRowAtPoint:location];
+    UITableViewCell *swipedCell  = [self.tableView cellForRowAtIndexPath:swipedIndexPath];
     
+    Task *tt = [self.dataArray objectAtIndex:swipedIndexPath.row];
     
+//    int curColor = tt.tapColour ;
+//    if (curColor == 3) {
+//        arrayTask.tapColour = 0;
+//    } else {
+//        tt.tapColour = arrayTask.tapColour + 1;
+//    }
+//    
+//    [self updateCellColorWithTask:arrayTask andCell:swipedCell];
 }
+
+//- (void)updateCellColorWithTask:(Task *)task andCell:(UITableViewCell *)cell {
+//    if (task.tapColour == 0) {
+//        cell.textLabel.textColor = [UIColor blackColor];
+//    } else if (task.tapColour == 1) {
+//        cell.textLabel.textColor = [UIColor redColor];
+//    } else if (task.tapColour == 2) {
+//        cell.textLabel.textColor = [UIColor orangeColor];
+//    } else {
+//        cell.textLabel.textColor = [UIColor greenColor];
+//    }
+//}
+
+
 - (IBAction)onAddButtonPressed:(UIBarButtonItem *)sender {
     [self.dataArray addObject:self.contentText.text];
+    Task *task=[[Task alloc]init];
+    task.tapColour=0;
+    task.isComplete=NO;
+    
     
     [self.tableView reloadData];
     self.contentText.text=@"";
     [self.view endEditing:YES];
     
 }
-
-//- (IBAction)onAddButtonPressed:(UIButton *)sender {
-//    
-//    [self.dataArray addObject:self.contentText.text];
-//    
-//    [self.tableView reloadData];
-//    self.contentText.text=@"";
-//    [self.view endEditing:YES];
-//}
 
 
 - (IBAction)onEditButtonPressed:(UIBarButtonItem*)sender {
@@ -85,13 +110,28 @@
     
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"Cell"];
     cell.textLabel.text=[NSString stringWithFormat:@"%@", [self.dataArray objectAtIndex:indexPath.row] ];
-    cell.textLabel.highlightedTextColor = [UIColor greenColor];
+    
+   // cell.textLabel.textColor=[UIColor greenColor];
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-
+   
+ Task *task=[[Task alloc]init];
+    task = [self.dataArray objectAtIndex:indexPath.row];
+    
+    NSLog(@"%i", task.isComplete);
+    
+    if (task.isComplete) {
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+        selectedCell.accessoryType = UITableViewCellAccessoryNone;
+    } else {
+        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+        selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
+    }
+  //  task.isComplet = !task.isComplet;
+    
     
 }
 

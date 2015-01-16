@@ -14,6 +14,7 @@
 		035E6FB61A64D7A200CF7DF8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 035E6FB51A64D7A200CF7DF8 /* Images.xcassets */; };
 		035E6FB91A64D7A200CF7DF8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 035E6FB71A64D7A200CF7DF8 /* LaunchScreen.xib */; };
 		035E6FC51A64D7A200CF7DF8 /* DeprocrastinatorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 035E6FC41A64D7A200CF7DF8 /* DeprocrastinatorTests.m */; };
+		03C7C9941A68C3D4002BE64E /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 03C7C9931A68C3D4002BE64E /* Task.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,8 @@
 		035E6FBE1A64D7A200CF7DF8 /* DeprocrastinatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DeprocrastinatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		035E6FC31A64D7A200CF7DF8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		035E6FC41A64D7A200CF7DF8 /* DeprocrastinatorTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DeprocrastinatorTests.m; sourceTree = "<group>"; };
+		03C7C9921A68C3D4002BE64E /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Task.h; path = ../Task.h; sourceTree = "<group>"; };
+		03C7C9931A68C3D4002BE64E /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Task.m; path = ../Task.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,8 @@
 				035E6FAD1A64D7A200CF7DF8 /* AppDelegate.m */,
 				035E6FAF1A64D7A200CF7DF8 /* ViewController.h */,
 				035E6FB01A64D7A200CF7DF8 /* ViewController.m */,
+				03C7C9921A68C3D4002BE64E /* Task.h */,
+				03C7C9931A68C3D4002BE64E /* Task.m */,
 				035E6FB21A64D7A200CF7DF8 /* Main.storyboard */,
 				035E6FB51A64D7A200CF7DF8 /* Images.xcassets */,
 				035E6FB71A64D7A200CF7DF8 /* LaunchScreen.xib */,
@@ -219,6 +224,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03C7C9941A68C3D4002BE64E /* Task.m in Sources */,
 				035E6FB11A64D7A200CF7DF8 /* ViewController.m in Sources */,
 				035E6FAE1A64D7A200CF7DF8 /* AppDelegate.m in Sources */,
 				035E6FAB1A64D7A200CF7DF8 /* main.m in Sources */,
@@ -412,6 +418,7 @@
 				035E6FCA1A64D7A200CF7DF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		035E6FCB1A64D7A200CF7DF8 /* Build configuration list for PBXNativeTarget "DeprocrastinatorTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +427,7 @@
 				035E6FCD1A64D7A200CF7DF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
