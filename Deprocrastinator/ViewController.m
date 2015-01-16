@@ -48,17 +48,17 @@
 //    [self updateCellColorWithTask:arrayTask andCell:swipedCell];
 }
 
-//- (void)updateCellColorWithTask:(Task *)task andCell:(UITableViewCell *)cell {
-//    if (task.tapColour == 0) {
-//        cell.textLabel.textColor = [UIColor blackColor];
-//    } else if (task.tapColour == 1) {
-//        cell.textLabel.textColor = [UIColor redColor];
-//    } else if (task.tapColour == 2) {
-//        cell.textLabel.textColor = [UIColor orangeColor];
-//    } else {
-//        cell.textLabel.textColor = [UIColor greenColor];
-//    }
-//}
+- (void)updateCellColorWithTask:(Task *)task andCell:(UITableViewCell *)cell {
+    if (task.tapColour == 0) {
+        cell.textLabel.textColor = [UIColor blackColor];
+    } else if (task.tapColour == 1) {
+        cell.textLabel.textColor = [UIColor redColor];
+    } else if (task.tapColour == 2) {
+        cell.textLabel.textColor = [UIColor orangeColor];
+    } else {
+        cell.textLabel.textColor = [UIColor greenColor];
+    }
+}
 
 
 - (IBAction)onAddButtonPressed:(UIBarButtonItem *)sender {
@@ -109,16 +109,19 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"Cell"];
-    cell.textLabel.text=[NSString stringWithFormat:@"%@", [self.dataArray objectAtIndex:indexPath.row] ];
-    
-   // cell.textLabel.textColor=[UIColor greenColor];
-    
+//    cell.textLabel.text=[NSString stringWithFormat:@"%@", [self.dataArray objectAtIndex:indexPath.row] ];
+    Task *tsk=[Task new];
+    tsk.textString = [self.dataArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@", tsk.textString];
+
+    [self updateCellColorWithTask:tsk andCell:cell];
+
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
    
- Task *task=[[Task alloc]init];
+    Task *task=[Task new];
     task = [self.dataArray objectAtIndex:indexPath.row];
     
     NSLog(@"%i", task.isComplete);
@@ -130,9 +133,7 @@
         UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
         selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
     }
-  //  task.isComplet = !task.isComplet;
-    
-    
+   
 }
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
