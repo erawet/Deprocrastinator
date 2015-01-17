@@ -9,13 +9,14 @@
 #import "ViewController.h"
 #import "Task.h"
 
-@interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface ViewController ()<UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *contentText;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property BOOL editBtnPress;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *onAddBtn;
+@property (nonatomic, strong) NSIndexPath *indexPathToBeDeleted;
 
 @property NSMutableArray *dataArray;
 
@@ -38,14 +39,14 @@
     
     Task *tt = [self.dataArray objectAtIndex:swipedIndexPath.row];
     
-//    int curColor = tt.tapColour ;
-//    if (curColor == 3) {
-//        arrayTask.tapColour = 0;
-//    } else {
-//        tt.tapColour = arrayTask.tapColour + 1;
-//    }
-//    
-//    [self updateCellColorWithTask:arrayTask andCell:swipedCell];
+    int curColor = tt.tapColour ;
+    if (curColor == 3) {
+        tt.tapColour = 0;
+    } else {
+        tt.tapColour = tt.tapColour + 1;
+    }
+    
+    [self updateCellColorWithTask:tt andCell:swipedCell];
 }
 
 - (void)updateCellColorWithTask:(Task *)task andCell:(UITableViewCell *)cell {
@@ -112,8 +113,8 @@
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"Cell"];
 //    cell.textLabel.text=[NSString stringWithFormat:@"%@", [self.dataArray objectAtIndex:indexPath.row] ];
     Task *tsk=[Task new];
-    tsk.textString = [self.dataArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@", tsk.textString];
+    tsk = self.dataArray[indexPath.row];
+    cell.textLabel.text = tsk.textString;
 
     [self updateCellColorWithTask:tsk andCell:cell];
 
@@ -125,16 +126,19 @@
     Task *task=[Task new];
     task = [self.dataArray objectAtIndex:indexPath.row];
     
-    NSLog(@"%i", task.isComplete);
+    UITableViewCell *selectedCell=[tableView cellForRowAtIndexPath:indexPath];
+    selectedCell.textLabel.textColor=[UIColor greenColor];
+
+//    if (task.isComplete) {
+//        UITableViewCell *selectedCell=[tableView cellForRowAtIndexPath:indexPath];
+//        selectedCell.textLabel.textColor=[UIColor greenColor];
+////        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+////        selectedCell.accessoryType = UITableViewCellAccessoryNone;
+//    } else {
+////        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+////        selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
+//    }
     
-    if (task.isComplete) {
-        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectedCell.accessoryType = UITableViewCellAccessoryNone;
-    } else {
-        UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
-        selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-   
 }
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath
@@ -149,8 +153,25 @@
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    [self.dataArray removeObjectAtIndex:indexPath.row];
-    [self.tableView reloadData];
+    UIAlertView *alert=[[UIAlertView alloc] initWithTitle:@"Warning !!" message:@"Are you sure you want to delete?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"YES", nil];
+    
+    [alert show];
+    
+    self.indexPathToBeDeleted = indexPath;
 }
+
+#pragma Mark AlertView Delegate
+
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    
+    NSString *title=[alertView buttonTitleAtIndex:buttonIndex];
+    
+    if ([title isEqualToString:@"YES"]) {
+        [self.dataArray removeObjectAtIndex:[self.indexPathToBeDeleted row]];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:self.indexPathToBeDeleted] withRowAnimation:UITableViewRowAnimationFade];
+    }
+}
+
+
 
 @end
